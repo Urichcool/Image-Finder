@@ -1,0 +1,52 @@
+body{
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #212121;
+  background-image: radial-gradient(#E8E8E8 20%, transparent 20%);
+  background-position: 0 0;
+  background-size: 10px 10px;
+  background-color: aliceblue;
+};
+
+.page-header{
+    background-color: #4267B2; 
+}
+
+.js-search-form{
+    position: relative;
+    display: flex;
+    width: 350px;
+   margin-left: auto;
+   margin-right: auto;
+   padding-top: 10px;
+   padding-bottom: 10px;
+}
+
+.js-input{
+     border: none;
+    width:350px;
+    height: 40px;
+    outline: none;
+    border-radius: 2px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06), 1px 4px 6px rgba(0, 0, 0, 0.16);
+}
+
+.button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    height: 40px;
+width: 40px;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+     border-radius: 2px;
+     &:hover,
+  &:focus{
+    background-color: #E8E8E8;
+  }
+}
