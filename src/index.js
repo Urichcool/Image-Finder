@@ -5,7 +5,9 @@ const refs = {
   searchImagesForm: document.querySelector('.search-form'),
   searchImagesInputEl: document.querySelector('.js-input'),
   galleryEl: document.querySelector('.gallery'),
+  loadMoreBtnEl: document.querySelector('.load-more')
 };
+
 
 let page = 1;
 
