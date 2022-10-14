@@ -11,6 +11,7 @@ const refs = {
 
 let page = 1;
 
+
 async function getImages(keyWord) {
   try {
     const response = await axios.get(
@@ -24,25 +25,49 @@ async function getImages(keyWord) {
 }
 
 
-
 refs.searchImagesForm.addEventListener('submit', onSubmitRender);
-
+refs.loadMoreBtnEl.addEventListener('click', onClickRender);
 
 
 async function onSubmitRender(evt) {
   evt.preventDefault();
-   clearMarkup();
+  clearMarkup();
+  refs.loadMoreBtnEl.style = 'display: none;';
+  page = 1;
   const trimedValue = refs.searchImagesInputEl.value.trim();
   const response = await getImages(trimedValue);
   const images = await response.data.hits;
   if (images.length === 0) {
-    clearMarkup();
     Notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
   }
-  renderImageCards(images);
+  else {
+    renderImageCards(images);
+    refs.loadMoreBtnEl.style = 'display: flex;';
+    Notiflix.Notify.success(
+      `Hooray! We found ${response.data.totalHits} images.`
+    );
+  }
+  
 }
+
+
+async function onClickRender() {
+  const trimedValue = refs.searchImagesInputEl.value.trim();
+  const response = await getImages(trimedValue);
+  const images = await response.data.hits;
+  const totalPages = await response.data.totalHits / 40;
+  renderImageCards(images);
+  page += 1;
+  if (page > Math.round(totalPages)) {
+    Notiflix.Notify.failure(
+      "We're sorry, but you've reached the end of search results."
+    );
+    refs.loadMoreBtnEl.style = 'display: none;';
+  }
+}
+
 
 function renderImageCards(images) {
  const markup = images
@@ -70,9 +95,11 @@ function renderImageCards(images) {
 </div>`;
    })
    .join('');
- refs.galleryEl.innerHTML = markup;
+  refs.galleryEl.insertAdjacentHTML('beforeend', markup);
 }
+
 
 function clearMarkup() {
   refs.galleryEl.innerHTML = '';
-  }
+}
+  
