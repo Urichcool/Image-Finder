@@ -1,4 +1,6 @@
 import Notiflix from 'notiflix';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 const axios = require('axios').default;
 
 const refs = {
@@ -17,7 +19,6 @@ async function getImages(keyWord) {
     const response = await axios.get(
       `https://pixabay.com/api/?key=30483075-32508e0f0aa6f1eedcbd37828&q=${keyWord}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`
     );
-    console.log(response);
     return response;
   } catch (error) {
     console.error(error);
@@ -97,6 +98,7 @@ function renderImageCards(images) {
    .join('');
   refs.galleryEl.insertAdjacentHTML('beforeend', markup);
 }
+
 
 
 function clearMarkup() {
