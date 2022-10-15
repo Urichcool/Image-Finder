@@ -21,17 +21,6 @@ img {
   width: 100%;
 }
 
-.image-link{
-  transition-property:transform;
-  transition-duration: 500ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
- &:hover,
-  &:focus{
- transform: scale(1.03);
-
-  }
-}
-
 
 .container {
   margin-left: auto;
@@ -67,6 +56,9 @@ img {
  @media screen and (max-width: 479px) {
     width: 280px;
   }
+     @media screen and (min-width: 768px) {
+    width: 500px;
+  }
      position: relative;
     display: flex;
     width: 350px;
@@ -81,11 +73,13 @@ img {
 .js-input{
      border: none;
      width: 300px;
-   max-width:350px;
     height: 35px;
     outline: none;
     border-radius: 2px;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06), 1px 4px 6px rgba(0, 0, 0, 0.16);
+     @media screen and (min-width: 768px) {
+    width: 500px;
+  }
 }
 
 .button{
@@ -139,6 +133,19 @@ margin-bottom: 0;
  }
 
 }
+
+
+.image-link{
+  transition-property:transform;
+  transition-duration: 500ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+ &:hover
+  {
+ transform: scale(1.03);
+
+  }
+}
+
 
 .info{
   display: flex;
