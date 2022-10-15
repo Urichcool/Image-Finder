@@ -10,11 +10,28 @@ body{
   background-color: aliceblue;
 };
 
+a{
+  text-decoration: none;
+  color: inherit;
+}
+
 img {
   display: block;
   height: 250px;
   width: 100%;
 }
+
+.image-link{
+  transition-property:transform;
+  transition-duration: 500ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+ &:hover,
+  &:focus{
+ transform: scale(1.03);
+
+  }
+}
+
 
 .container {
   margin-left: auto;
