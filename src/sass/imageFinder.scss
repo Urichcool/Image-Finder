@@ -47,9 +47,14 @@ img {
   }
   }
 
+.static-header{
+ position: fixed;
+ z-index: 100;
+}
 
 .page-header{
     background-color: #1645a3; 
+    width: 100%;
 }
 
 .search-form{
@@ -101,7 +106,7 @@ width: 40px;
 }
 
 .gallery{
-  padding-top: 30px;
+  padding-top: 80px;
 padding-bottom: 30px;
   @media screen and(min-width: 768px) {
  display: grid;
