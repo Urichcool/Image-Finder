@@ -92,19 +92,19 @@ async function onClickRender() {
     page += 1;
   const response = await getImages(trimedValue, page);
     const images = await response.data.hits;
-    const totalPages = Math.round(await response.data.totalHits / 40);
-    if (page === totalPages) {
+    const totalPages = await response.data.totalHits / 40;
+    if (page > totalPages) {
         Notiflix.Notify.failure(
             "We're sorry, but you've reached the end of search results."
         );
         refs.loadMoreBtnEl.style = 'display: none;';
     
   } 
-    renderImageCards(images);
-      lightbox.refresh();
+renderImageCards(images);
+lightbox.refresh();
  const { height: cardHeight } = document
-   .querySelector('.gallery')
-   .firstElementChild.getBoundingClientRect();
+.querySelector('.gallery')
+.firstElementChild.getBoundingClientRect();
 
  window.scrollBy({
    top: cardHeight * 2,
