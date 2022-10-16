@@ -46,23 +46,28 @@ async function onSubmitRender(evt) {
 
 
 async function onClickRender() {
+  refs.loadMoreBtnEl.style = 'display: none;';
     const trimedValue = refs.searchImagesInputEl.value.trim();
     page += 1;
   const response = await getImages(trimedValue, page);
     const images = await response.data.hits;
     const totalPages = await response.data.totalHits / 40;
-    if (page > totalPages) {
+  if (page > totalPages) {
     Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
     refs.loadMoreBtnEl.style = 'display: none;';
-    } 
-    renderImageCards(images);
-    lightbox.refresh();
-     const { height: cardHeight } = document.querySelector('.gallery').firstElementChild.getBoundingClientRect();
-
-    window.scrollBy({
+  }
+  else {
+    refs.loadMoreBtnEl.style = 'display: flex;';
+  }
+  renderImageCards(images);
+  lightbox.refresh();
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+  window.scrollBy({
     top: cardHeight * 2,
     behavior: 'smooth',
- });
+  });
 }
 
 function onSubmitScroll() {
