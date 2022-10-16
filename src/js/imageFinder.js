@@ -36,11 +36,7 @@ async function onSubmitRender(evt) {
     clearMarkup();
       renderImageCards(images);
       lightbox.refresh();
-       window.scroll({
-         top: 0,
-         left: 0,
-         behavior: 'smooth',
-       });
+    onSubmitScroll();
     refs.loadMoreBtnEl.style = 'display: flex;';
     Notiflix.Notify.success(
       `Hooray! We found ${response.data.totalHits} images.`
@@ -67,6 +63,14 @@ async function onClickRender() {
     top: cardHeight * 2,
     behavior: 'smooth',
  });
+}
+
+function onSubmitScroll() {
+   window.scroll({
+     top: 0,
+     left: 0,
+     behavior: 'smooth',
+   });
 }
 
 function renderImageCards(images) {
