@@ -13,6 +13,62 @@ const refs = {
 let page = 1;
 
 
+refs.searchImagesForm.addEventListener('submit', onSubmitRender);
+refs.loadMoreBtnEl.addEventListener('click', onClickRender);
+
+
+async function onSubmitRender(evt) {
+  evt.preventDefault();
+    refs.loadMoreBtnEl.style = 'display: none;';
+    page = 1;
+  const trimedValue = refs.searchImagesInputEl.value.trim();
+  if (trimedValue === '') {
+    return;
+  }
+  const response = await getImages(trimedValue, page);
+  const images = await response.data.hits;
+  if (images.length === 0) {
+    clearMarkup();
+    Notiflix.Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again.'
+    );
+  } else {
+    clearMarkup();
+      renderImageCards(images);
+      lightbox.refresh();
+       window.scroll({
+         top: 0,
+         left: 0,
+         behavior: 'smooth',
+       });
+    refs.loadMoreBtnEl.style = 'display: flex;';
+    Notiflix.Notify.success(
+      `Hooray! We found ${response.data.totalHits} images.`
+    );
+  }
+}
+
+
+async function onClickRender() {
+    const trimedValue = refs.searchImagesInputEl.value.trim();
+    page += 1;
+  const response = await getImages(trimedValue, page);
+    const images = await response.data.hits;
+    const totalPages = await response.data.totalHits / 40;
+    if (page > totalPages) {
+    Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
+    refs.loadMoreBtnEl.style = 'display: none;';
+    } 
+    renderImageCards(images);
+    lightbox.refresh();
+     const { height: cardHeight } = document.querySelector('.gallery').firstElementChild.getBoundingClientRect();
+
+    window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+ });
+}
+
 function renderImageCards(images) {
   const markup = images
     .map(image => {
@@ -49,68 +105,8 @@ function renderImageCards(images) {
 
 let lightbox = new SimpleLightbox('.photo-card a', {
   captionDelay: 250,
-    scrollZoom: false
+  scrollZoom: false,
 });
-
-refs.searchImagesForm.addEventListener('submit', onSubmitRender);
-
-async function onSubmitRender(evt) {
-  evt.preventDefault();
-    refs.loadMoreBtnEl.style = 'display: none;';
-    page = 1;
-  const trimedValue = refs.searchImagesInputEl.value.trim();
-  if (trimedValue === '') {
-    return;
-  }
-  const response = await getImages(trimedValue, page);
-  const images = await response.data.hits;
-  if (images.length === 0) {
-    clearMarkup();
-    Notiflix.Notify.failure(
-      'Sorry, there are no images matching your search query. Please try again.'
-    );
-  } else {
-    clearMarkup();
-      renderImageCards(images);
-      lightbox.refresh();
-       window.scroll({
-         top: 0,
-         left: 0,
-         behavior: 'smooth',
-       });
-    refs.loadMoreBtnEl.style = 'display: flex;';
-    Notiflix.Notify.success(
-      `Hooray! We found ${response.data.totalHits} images.`
-    );
-  }
-}
-
-refs.loadMoreBtnEl.addEventListener('click', onClickRender);
-
-async function onClickRender() {
-    const trimedValue = refs.searchImagesInputEl.value.trim();
-    page += 1;
-  const response = await getImages(trimedValue, page);
-    const images = await response.data.hits;
-    const totalPages = await response.data.totalHits / 40;
-    if (page > totalPages) {
-        Notiflix.Notify.failure(
-            "We're sorry, but you've reached the end of search results."
-        );
-        refs.loadMoreBtnEl.style = 'display: none;';
-    
-  } 
-renderImageCards(images);
-lightbox.refresh();
- const { height: cardHeight } = document
-.querySelector('.gallery')
-.firstElementChild.getBoundingClientRect();
-
- window.scrollBy({
-   top: cardHeight * 2,
-   behavior: 'smooth',
- });
-}
 
 function clearMarkup() {
   refs.galleryEl.innerHTML = '';
